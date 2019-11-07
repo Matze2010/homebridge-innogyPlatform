@@ -1,6 +1,6 @@
 {
-  "name": "homebridge-innogy",
-  "version": "1.0.0",
+  "name": "homebridge-innogyPlatform",
+  "version": "0.9.0",
   "description": "",
   "main": "index.js",
   "scripts": {
