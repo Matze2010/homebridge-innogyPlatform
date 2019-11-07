@@ -1,0 +1,23 @@
+{
+  "name": "homebridge-innogy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "homebridge",
+    "homebridge-plugin",
+    "homekit"
+  ],
+  "engines": {
+    "node": ">=10.15.0",
+    "homebridge": ">=0.4.45"
+  },
+  "author": "Mathias Gisch",
+  "license": "ISC",
+  "dependencies": {
+    "innogy-smarthome-lib": "^0.5.1"
+  }
+}
