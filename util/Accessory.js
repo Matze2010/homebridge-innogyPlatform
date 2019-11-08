@@ -22,8 +22,9 @@ class Accessory {
     }
 
     getServices() {
-        this._log.debug(`Getting services for ${this.name} (${this._services.length} service(s) registered for this accessory`);
-        return Object.values(this._services);
+        let list = Object.values(this._services);
+	    this._log.debug(`Getting services for ${this.name} (${list.length} service(s) registered for this accessory`);
+        return list;
     }
 
     _getAccessoryInformationService() {
