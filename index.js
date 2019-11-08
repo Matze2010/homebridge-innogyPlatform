@@ -18,6 +18,8 @@ const InnogyBridge = class {
 
     log.debug("Instantiating InnogyBridge");
 
+    let bridge = this;
+    
     this._callback = null;
 
     this._log = log;
@@ -63,6 +65,26 @@ const InnogyBridge = class {
       api:  api,
       log: log
     };
+    
+    this._platform.innogyBackend.on('open', function() {
+    	console.log("Connection open");
+	    this.isConnected = true;
+    });	  
+
+    this._platform.innogyBackend.on('reconnect', function() {
+    	console.log("Connection reconnected");
+	    this.isConnected = true;
+    });	  
+    
+    this._platform.innogyBackend.on('close', function() {
+    	console.log("Connection closed");
+	    this.isConnected = false;
+    });	  
+    
+    this._platform.innogyBackend.on('error', function() {
+    	console.log("Connection error: ");
+	    this.isConnected = false;
+    });	  
 
     this._platform.api.on('didFinishLaunching', function() {
       this._platform.innogyBackend.init();
@@ -89,8 +111,9 @@ const InnogyBridge = class {
     }.bind(this));
 
     this._platform.innogyBackend.on("initializationComplete", function() {
-      this.listDevicesDetected();
-    }.bind(this));
+      bridge.listDevicesDetected();
+      this.isConnected = false;
+    });
   }
 
   addAccessory(type, device) {
