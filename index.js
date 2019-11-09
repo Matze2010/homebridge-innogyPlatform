@@ -4,6 +4,7 @@ const version = require('./package').version;
 const platformName = 'Innogy Smarthome Bridge';
 const platformPrettyName = 'Innogy-Smarthome';
 const SmartHome = require("innogy-smarthome-lib");
+const Capability = require("innogy-smarthome-lib/lib/smarthome/objects/capability");
 
 const {Accessory} = require('./util/Accessory');
 
@@ -102,6 +103,11 @@ const InnogyBridge = class {
     }.bind(this));
 
     this._platform.innogyBackend.on("stateChanged", function (aCapability) {
+      if (!(aCapability instanceof Capability)) {
+        this._log.warn("StateChange detected on some else than Capability");
+        return;
+      }
+
       let sensorType = aCapability.type;
       let deviceId = this._platform.innogyBackend.getDeviceByCapability(aCapability).id;
       let accessory = this.getAccessory(deviceId);
@@ -161,6 +167,9 @@ const InnogyBridge = class {
             this.addAccessory("Thermostat", aDevice);
           }
 
+        } else if ((innogyType === 'PSS') || (innogyType === 'VariableActuator')) {
+          this.addAccessory("Switch", aDevice);
+        
         } else if (innogyType === 'VRCC') {
           this.addAccessory("Thermostat", aDevice);
 
