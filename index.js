@@ -179,7 +179,10 @@ const InnogyBridge = class {
 
       }.bind(this));
             
-      this._callback(this._accessories);
+      if ((this._callback) && (typeof this._callback === "function")) {
+        this._callback(this._accessories);
+        this._callback = null;
+      }
     }
   }
   
